@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>恭喜中獎</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: sans-serif;
+      text-align: center;
+      padding-top: 100px;
+    }
+    #blueScreen {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #0000aa;
+      color: white;
+      font-family: monospace;
+      font-size: 20px;
+      padding: 40px;
+      text-align: left;
+      z-index: 9998;
+    }
+    #follower {
+      position: fixed;
+      font-size: 40px;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    button {
+      font-size: 24px;
+      padding: 15px 30px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>恭喜！你是第 1000000 位訪客</h1>
+  <button onclick="startPrank()">點我領取獎金</button>
+  <div id="follower">👻</div>
+  <div id="blueScreen">
+    <h1>:(</h1>
+    <p>你的電腦遇到問題，需要重新啟動。</p>
+    <p>我們正在收集一些錯誤資訊，然後為你重新啟動。</p>
+    <p id="percent">完成 0%</p>
+  </div>
+  <script>
+    // 1. 游標跟屁蟲：頁面載入就開始
+    document.onmousemove = e => {
+      let f = document.getElementById('follower');
+      f.style.left = e.pageX + 15 + 'px';
+      f.style.top = e.pageY + 15 + 'px';
+    }
+    function startPrank() {
+      // 2. 彈窗地獄
+      for(let i=1; i<=5; i++) {
+        alert('警告 ' + i + '/5：你確定要領獎嗎？');
+      }
+      
+      // 3. 假藍畫面
+      document.getElementById('blueScreen').style.display = 'block';
+      let percent = 0;
+      let timer = setInterval(() => {
+        percent = percent < 99 ? percent + 1 : 99;
+        document.getElementById('percent').textContent = `完成 ${percent}%`;
+        if(percent === 99) clearInterval(timer);
+      }, 150);
+    }
+  </script>
+</body>
+</html>
